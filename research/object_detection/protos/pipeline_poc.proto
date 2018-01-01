@@ -1,5 +1,5 @@
 
-// ---------------------- model configurations -----------------------
+# ---------------------- model configurations -----------------------
 
 # SSD with Inception v2 configured for Oxford-IIIT Pets Dataset.
 # Users should configure the fine_tune_checkpoint field in the train config as
@@ -136,7 +136,7 @@ model {
   }
 }
 
-// ---------------------- train_config configurations -----------------------
+# ---------------------- train_config configurations -----------------------
 
 train_config: {
   batch_size: 24
@@ -171,7 +171,7 @@ train_config: {
   }
 }
 
-// ---------------------- train_input_reader configurations -----------------------
+# ---------------------- train_input_reader configurations -----------------------
 
 train_input_reader: {
   tf_record_input_reader {
@@ -180,7 +180,7 @@ train_input_reader: {
   label_map_path: "object_detection/data/pet_label_map.pbtxt"
 }
 
-// ---------------------- eval_config configurations -----------------------
+# ---------------------- eval_config configurations -----------------------
 
 eval_config: {
   num_examples: 2000
@@ -189,7 +189,7 @@ eval_config: {
   max_evals: 10
 }
 
-// ---------------------- eval_input_reader configurations -----------------------
+# ---------------------- eval_input_reader configurations -----------------------
 
 eval_input_reader: {
   tf_record_input_reader {
