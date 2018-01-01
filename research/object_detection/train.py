@@ -80,6 +80,9 @@ flags.DEFINE_string('input_config_path', '',
 flags.DEFINE_string('model_config_path', '',
                     'Path to a model_pb2.DetectionModel config file.')
 
+# Champ: add gpu_ram_limit to limit amount of GPU RAM usage
+flags.DEFINE_float('gpu_ram_limit', 1.0, 'GPU RAM limit between 0-1'.)
+
 FLAGS = flags.FLAGS
 
 
@@ -104,6 +107,10 @@ def main(_):
                            ('input.config', FLAGS.input_config_path)]:
         tf.gfile.Copy(config, os.path.join(FLAGS.train_dir, name),
                       overwrite=True)
+
+  gpu_ram_limit = FLAGS.gpu_ram_limit
+  if gpu_ram_limit == 1.0:
+    gpu_ram_limit = None
 
   model_config = configs['model']
   train_config = configs['train_config']
@@ -156,7 +163,7 @@ def main(_):
 
   trainer.train(create_input_dict_fn, model_fn, train_config, master, task,
                 FLAGS.num_clones, worker_replicas, FLAGS.clone_on_cpu, ps_tasks,
-                worker_job_name, is_chief, FLAGS.train_dir)
+                worker_job_name, is_chief, FLAGS.train_dir, gpu_ram_limit)
 
 
 if __name__ == '__main__':
