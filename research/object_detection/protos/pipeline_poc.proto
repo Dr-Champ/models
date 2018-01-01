@@ -19,7 +19,7 @@ message TrainEvalPipelineConfig {
 
 // ---------------------- model configurations -----------------------
 
-# SSD with Inception v2 configuration for MSCOCO Dataset.
+# SSD with Inception v2 configured for Oxford-IIIT Pets Dataset.
 # Users should configure the fine_tune_checkpoint field in the train config as
 # well as the label_map_path and input_path fields in the train_input_reader and
 # eval_input_reader. Search for "PATH_TO_BE_CONFIGURED" to find the fields that
@@ -27,7 +27,7 @@ message TrainEvalPipelineConfig {
 
 model {
   ssd {
-    num_classes: 37					// tunable
+    num_classes: 37
     box_coder {
       faster_rcnn_box_coder {
         y_scale: 10.0
@@ -154,7 +154,7 @@ model {
   }
 }
 
-// --------------------- train_config configurations ---------------------
+// ---------------------- train_config configurations -----------------------
 
 train_config: {
   batch_size: 24
@@ -172,7 +172,7 @@ train_config: {
       epsilon: 1.0
     }
   }
-  fine_tune_checkpoint: "PATH_TO_BE_CONFIGURED/model.ckpt"				// tunable
+  fine_tune_checkpoint: "object_detection/models/model/ssd_inception_v2_coco_2017_11_17/model.ckpt"
   from_detection_checkpoint: true
   # Note: The below line limits the training process to 200K steps, which we
   # empirically found to be sufficient enough to train the pets dataset. This
@@ -189,32 +189,31 @@ train_config: {
   }
 }
 
-// ---------------- train_input_reader configurations ------------------
+// ---------------------- train_input_reader configurations -----------------------
 
 train_input_reader: {
   tf_record_input_reader {
-    input_path: "PATH_TO_BE_CONFIGURED/mscoco_train.record"				// tunable
+    input_path: "object_detection/data/pet_train_with_masks.record"
   }
-  label_map_path: "PATH_TO_BE_CONFIGURED/mscoco_label_map.pbtxt"		// tunable
+  label_map_path: "object_detection/data/pet_label_map.pbtxt"
 }
 
-// ------------------- eval_config configurations ----------------------
+// ---------------------- eval_config configurations -----------------------
 
 eval_config: {
-  num_examples: 8000
+  num_examples: 2000
   # Note: The below line limits the evaluation process to 10 evaluations.
   # Remove the below line to evaluate indefinitely.
   max_evals: 10
 }
 
-// ----------------- eval_input_reader configurations ------------------
+// ---------------------- eval_input_reader configurations -----------------------
 
 eval_input_reader: {
   tf_record_input_reader {
-    input_path: "PATH_TO_BE_CONFIGURED/mscoco_val.record"				// tunable
+    input_path: "object_detection/data/pet_val_with_masks.record"
   }
-  label_map_path: "PATH_TO_BE_CONFIGURED/mscoco_label_map.pbtxt"		// tunable
+  label_map_path: "object_detection/data/pet_label_map.pbtxt"
   shuffle: false
   num_readers: 1
-  num_epochs: 1
 }
