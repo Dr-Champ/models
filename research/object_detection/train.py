@@ -81,7 +81,7 @@ flags.DEFINE_string('model_config_path', '',
                     'Path to a model_pb2.DetectionModel config file.')
 
 # Champ: add gpu_ram_limit to limit amount of GPU RAM usage
-flags.DEFINE_float('gpu_ram_limit', 1.0, 'GPU RAM limit between 0-1'.)
+flags.DEFINE_float('gpu_ram_limit', 1.0, 'GPU RAM limit between 0-1.')  
 
 FLAGS = flags.FLAGS
 
